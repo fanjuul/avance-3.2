@@ -1,3 +1,5 @@
+import time
+
 import streamlit as st
 from maze_solver import MAZE, START, END, solve_maze_bfs, solve_maze_dfs, solve_maze_a_star
 
@@ -46,11 +48,14 @@ render_maze(MAZE)
 if solve_button:
     if algorithm in available_algorithms:
         solver = available_algorithms[algorithm]
+        start_time = time.perf_counter()
         path = solver(MAZE, START, END)
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
         if path:
-            st.success(f"Camino encontrado con {algorithm}!")
+            st.success(f"Camino encontrado con {algorithm}! Tiempo de ejecución: {elapsed_ms:.2f} ms")
             render_maze(MAZE, path)
         else:
             st.error("No se encontro un camino.")
+            st.info(f"Tiempo de ejecución: {elapsed_ms:.2f} ms")
     else:
         st.warning(f"El algoritmo {algorithm} aun no esta implementado. Usa BFS.")
