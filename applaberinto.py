@@ -1,5 +1,5 @@
 import streamlit as st
-from maze_solver import MAZE, START, END, solve_maze_bfs
+from maze_solver import MAZE, START, END, solve_maze_bfs, solve_maze_dfs, solve_maze_a_star
 
 st.title("Visualizador de Algoritmo de Busqueda en Laberinto")
 
@@ -29,10 +29,14 @@ def render_maze(maze, path=None):
 
 # Sidebar para controles
 st.sidebar.header("Opciones")
-available_algorithms = {"BFS": solve_maze_bfs}
+available_algorithms = {
+    "BFS": solve_maze_bfs,
+    "DFS": solve_maze_dfs,
+    "A*": solve_maze_a_star,
+}
 algorithm = st.sidebar.selectbox(
     "Selecciona el algoritmo",
-    ["BFS", "DFS (no implementado)", "A* (no implementado)"],
+    list(available_algorithms.keys()),
 )
 solve_button = st.sidebar.button("Resolver Laberinto")
 
